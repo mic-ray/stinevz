@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
+import Event from "../views/Event.vue";
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/events",
+    name: "Event",
+    component: Event,
   },
 ];
 
