@@ -1,94 +1,107 @@
 <template>
-  <div class="profile-view">
-    <div class="grid-container">
-      <div class="info-container">
-        <h2 class="heading">
-          Your profile
-        </h2>
-        <v-btn class="text-capitalize edit-button" v-on:click="edit" text
-          >Edit<v-icon>mdi-account-edit</v-icon></v-btn
-        >
-
-        <span class="field">Avatar</span>
-        <img
-          src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=ShirtCrewNeck&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-          alt="Avatar"
-          class="avatar"
-        />
-        <span
-          v-for="(info, i) in textInfo"
-          :key="i"
-          v-bind:class="{ field: info.field }"
-        >
-          {{ info.field ? info.field : info.text }}
-        </span>
-        <span class="field">Hobbies &amp; Interests</span>
-        <ul>
-          <li>Cooking</li>
-          <li>Volleyball</li>
-          <li>Skiing, Snowboard</li>
-        </ul>
-        <span class="field">Socials</span>
-        <ul>
-          <li>Mobile: 0185 4928763</li>
-          <li>
-            <a href="https://www.instagram.com/marco.polo95/">Instagram</a>
-          </li>
-          <li>
-            <a href="http://ca.linkedin.com/in/linkedin/MarcoPolo">LinkedIn</a>
-          </li>
-        </ul>
-      </div>
-      <div class="todo-container">
-        <h2 class="heading">
-          What to do next?
-        </h2>
-      </div>
+  <div class="grid-container">
+    <div class="info-container">
+      <h2 class="heading">
+        Your profile
+      </h2>
+      <v-btn class="text-capitalize edit-button" v-on:click="editProfile" text
+        >Edit<v-icon>mdi-account-edit</v-icon></v-btn
+      >
+      <span class="field">Avatar</span>
+      <img
+        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=ShirtCrewNeck&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
+        alt="Avatar"
+        class="avatar"
+      />
+      <template v-for="info in textInfo">
+        <span :key="info.field" class="field">{{ info.field }}</span>
+        <span :key="info.text">{{ info.text }}</span>
+      </template>
+      <span class="field">Hobbies &amp; Interests</span>
+      <ul>
+        <li>Cooking</li>
+        <li>Volleyball</li>
+        <li>Skiing, Snowboard</li>
+      </ul>
+      <span class="field">Socials</span>
+      <ul>
+        <li>Mobile: 0185 4928763</li>
+        <li>
+          <a href="https://www.instagram.com/marco.polo95/">Instagram</a>
+        </li>
+        <li>
+          <a href="http://ca.linkedin.com/in/linkedin/MarcoPolo">LinkedIn</a>
+        </li>
+      </ul>
     </div>
+    <div class="todo-container">
+      <h2 class="heading todo-heading">
+        What to do next?
+      </h2>
+      <template v-for="todo in todos">
+        <span :key="todo.todo" class="field">{{ todo.todo }}</span>
+        <span :key="todo.todo + todo.points">+{{ todo.points }} Stinchen </span>
+      </template>
+    </div>
+    <Toast ref="toast">
+      Profil bearbeitet! <span class="field">+3 Stinchen</span>
+    </Toast>
   </div>
 </template>
 <script>
+import Toast from "../components/Toast";
 export default {
   name: "Profile",
+  components: {
+    Toast,
+  },
   data: () => ({
     textInfo: [
       {
         field: "Name",
-      },
-      {
         text: "Marco",
       },
       {
         field: "Field of Study",
-      },
-      {
         text: "IT-Management and -Consulting",
       },
       {
         field: "Semester",
-      },
-      {
         text: "3",
       },
+
       {
         field: "Age",
-      },
-      {
         text: "25",
       },
     ],
-    todos: [{}],
+    todos: [
+      {
+        todo: "Complete your profile",
+        points: "3",
+      },
+      {
+        todo: "Join an event",
+        points: "5",
+      },
+      {
+        todo: "Say Hi to your fellow students",
+        points: "5",
+      },
+    ],
   }),
+  methods: {
+    editProfile: function() {
+      this.$store.commit("increaseScore", 3);
+      this.$refs.toast.display();
+    },
+  },
 };
 </script>
 <style>
-.profile-view {
-  margin: 50px 25px;
-}
 .grid-container {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  column-gap: 100px;
+  grid-template-columns: 1.75fr 1fr;
 }
 
 .info-container {
@@ -120,5 +133,8 @@ export default {
   row-gap: 10px;
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.todo-heading {
+  grid-column: 1 / span 2;
 }
 </style>

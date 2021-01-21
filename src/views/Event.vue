@@ -1,7 +1,5 @@
 <template>
-  <div class="event-view">
-    <h2 class="heading">Upcoming events</h2>
-  </div>
+  <h2 class="heading">Upcoming events</h2>
 </template>
 
 <script>
@@ -10,8 +8,4 @@ export default {
   components: {},
 };
 </script>
-<style>
-.event-view {
-  margin: 50px 25px;
-}
-</style>
+<style></style>

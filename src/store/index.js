@@ -12,7 +12,11 @@ export default new Vuex.Store({
       return state.score;
     },
   },
-  mutations: {},
+  mutations: {
+    increaseScore: (state, points) => {
+      state.score += points;
+    },
+  },
   actions: {},
   modules: {},
 });

@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <div class="line"></div>
     <v-app-bar
       flat
       color="rgba(200, 200, 200, 0.7)"
@@ -23,7 +24,7 @@
       <span class="ml-2"> {{ score }}</span>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container class="view-container">
         <router-view />
       </v-container>
     </v-main>
@@ -65,6 +66,21 @@ export default {
 };
 </script>
 <style>
+html,
+body {
+  height: 100%;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+.line {
+  background-color: #e2001a;
+  width: 100%;
+  height: 10px;
+  margin-top: 10px;
+}
 .title {
   margin-right: 50px;
 }
@@ -81,6 +97,10 @@ export default {
 .active-link {
   background-color: #e2001a;
   color: white;
+}
+
+.view-container {
+  margin: 50px auto;
 }
 
 .footer {
