@@ -61,7 +61,8 @@ export default {
 label {
   font-weight: bold;
 }
-input {
+#identifier,
+#password {
   padding: 5px;
   height: 50px;
   width: 80%;

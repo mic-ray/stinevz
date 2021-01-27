@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
 import Profile from "../views/Profile.vue";
 import Event from "../views/Event.vue";
+import Group from "../views/Group.vue";
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,11 @@ const routes = [
     path: "/events",
     name: "Event",
     component: Event,
+  },
+  {
+    path: "/groups",
+    name: "Group",
+    component: Group,
   },
 ];
 
