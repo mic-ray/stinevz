@@ -11,36 +11,44 @@
             <h1>{{ group.title }}</h1>
             {{ group.members }} members
           </div>
-          <div class="chat-icon">
+          <div
+            v-on:click="
+              group.messages > 0 ? handleGroupChat(group.title) : null
+            "
+            class="chat-icon"
+          >
             <v-icon size="50">mdi-forum</v-icon>
-            <span class="chat-badge">{{ group.messages }}</span>
+            <span v-if="group.messages > 0" class="chat-badge">{{
+              group.messages
+            }}</span>
           </div>
         </div>
       </div>
     </template>
+    <Toast ref="toast">
+      In Gruppen engagiert! <span class="bold">+5 Stinchen</span>
+    </Toast>
   </div>
 </template>
 
 <script>
+import Toast from "../components/Toast";
 export default {
-  data: () => ({
-    groups: [
-      {
-        title: "Healthy Cooking",
-        members: 165,
-      },
-      {
-        title: "ITIT 4 Life - Learning Group",
-        members: 54,
-        messages: 4,
-      },
-      {
-        title: "Among Us",
-        members: 382,
-        messages: 10,
-      },
-    ],
-  }),
+  components: {
+    Toast,
+  },
+  methods: {
+    handleGroupChat: function(groupTitle) {
+      this.$store.commit("decrementGroupMessages", groupTitle);
+      this.$store.commit("increaseScore", 5);
+      this.$refs.toast.display();
+    },
+  },
+  computed: {
+    groups: function() {
+      return this.$store.getters.getGroups;
+    },
+  },
 };
 </script>
 

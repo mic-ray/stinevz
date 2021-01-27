@@ -88,6 +88,9 @@ body {
   color: #0271bb;
   font-weight: bold;
 }
+.bold {
+  font-weight: bold;
+}
 .link {
   padding: 13px;
   width: 100px;

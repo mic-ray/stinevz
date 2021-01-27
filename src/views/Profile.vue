@@ -7,23 +7,23 @@
       <v-btn class="text-capitalize edit-button" v-on:click="editProfile" text
         >Edit<v-icon>mdi-account-edit</v-icon></v-btn
       >
-      <span class="field">Avatar</span>
+      <span class="bold">Avatar</span>
       <img
         src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=ShirtCrewNeck&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
         alt="Avatar"
         class="avatar"
       />
       <template v-for="info in textInfo">
-        <span :key="info.field" class="field">{{ info.field }}</span>
+        <span :key="info.field" class="bold">{{ info.field }}</span>
         <span :key="info.text">{{ info.text }}</span>
       </template>
-      <span class="field">Hobbies &amp; Interests</span>
+      <span class="bold">Hobbies &amp; Interests</span>
       <ul>
         <li>Cooking</li>
         <li>Volleyball</li>
         <li>Skiing, Snowboard</li>
       </ul>
-      <span class="field">Socials</span>
+      <span class="bold">Socials</span>
       <ul>
         <li>Mobile: 0185 4928763</li>
         <li>
@@ -39,12 +39,12 @@
         What to do next?
       </h2>
       <template v-for="todo in todos">
-        <span :key="todo.todo" class="field">{{ todo.todo }}</span>
+        <span :key="todo.todo" class="bold">{{ todo.todo }}</span>
         <span :key="todo.todo + todo.points">+{{ todo.points }} Stinchen </span>
       </template>
     </div>
     <Toast ref="toast">
-      Profil bearbeitet! <span class="field">+3 Stinchen</span>
+      Profil bearbeitet! <span class="bold">+3 Stinchen</span>
     </Toast>
   </div>
 </template>
@@ -114,9 +114,6 @@ export default {
 }
 .edit-button {
   justify-self: start;
-}
-.field {
-  font-weight: bold;
 }
 .avatar {
   vertical-align: middle;
