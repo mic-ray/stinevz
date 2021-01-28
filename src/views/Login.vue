@@ -34,7 +34,7 @@ export default {
 </script>
 <style>
 .login-container {
-  width: 50%;
+  width: 550px;
   margin: auto;
 }
 .logo {
@@ -65,13 +65,13 @@ label {
 #password {
   padding: 5px;
   height: 50px;
-  width: 80%;
+  width: 300px;
   background-color: white;
   border: 1px solid black;
   border-radius: 5px;
 }
 .login-button {
   grid-column: 1 / span 2;
-  width: 50%;
+  width: 200px;
 }
 </style>
