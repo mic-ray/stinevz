@@ -203,8 +203,8 @@
           </div>
         </div>
       </div>
-      <!-- <script type="text/javascript" src="vendor/js/date-picker.js"></script> -->
-      <!-- <script type="text/javascript" src="vendor/js/date-picker-2.js"></script> -->
+      <!-- <script type="text/javascript" src="../../vendor/js/date-picker.js"></script> -->
+      <!-- <script type="text/javascript" src="../../vendor/js/date-picker-2.js"></script> -->
     </body>
   </div>
 </template>
