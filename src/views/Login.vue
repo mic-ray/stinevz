@@ -1,10 +1,6 @@
 <template>
   <div class="login-container">
-    <img
-      src="https://www.rrz.uni-hamburg.de/2510965/stine-640x361-38571f28ae48dbbc846435b7e7c21500644a7ca4.jpg"
-      alt="Stine-Logo"
-      class="logo"
-    />
+    <img src="../assets/stine-logo.jpg" alt="Stine-Logo" class="logo" />
     <div class="loginCard elevation-2">
       <h1 class="login-heading">Login to STiNE VZ</h1>
       <label for="identifier">STiNE-Identifier:</label>
@@ -12,7 +8,6 @@
       <label for="password">STiNE-Password:</label>
       <input id="password" type="password" placeholder="********" />
       <v-btn
-        flat
         v-on:click="login"
         color="primary"
         class="login-button text-capitalize"

@@ -1,7 +1,7 @@
 <template>
   <div class="flex-container">
     <div class="heading-container">
-      <h2 class="heading">Find your groups</h2>
+      <h2 class="heading">Your groups</h2>
       <input class="group-search" type="text" placeholder="Search..." />
     </div>
     <template v-for="group in groups">

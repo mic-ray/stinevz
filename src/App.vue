@@ -10,15 +10,26 @@
       app
     >
       <div class="title">{{ title }}</div>
-      <router-link
-        tag="div"
-        active-class="active-link"
-        class="link"
-        v-for="entry in menuEntries"
-        :key="entry.text"
-        :to="entry.route"
-        >{{ entry.text }}</router-link
-      >
+      <template v-for="entry in menuEntries">
+        <div class="dropdown" :key="entry.text">
+          <router-link
+            tag="div"
+            active-class="active-link"
+            class="link"
+            :to="entry.route"
+            >{{ entry.text }}</router-link
+          >
+          <div class="dropdown-content">
+            <router-link
+              tag="a"
+              v-for="dropdownEntry in entry.dropdownEntries"
+              :key="dropdownEntry.text"
+              :to="dropdownEntry.route"
+              >{{ dropdownEntry.text }}</router-link
+            >
+          </div>
+        </div>
+      </template>
       <v-spacer />
       <v-icon>mdi-trophy</v-icon>
       <span class="ml-2"> {{ score }}</span>
@@ -45,16 +56,70 @@ export default {
     title: "STiNE VZ",
     menuEntries: [
       {
-        text: "My Profile",
+        text: "Profile",
         route: "/profile",
+        dropdownEntries: [
+          {
+            text: "Friends",
+            route: "/profile/friends",
+          },
+          {
+            text: "Documents",
+            route: "/profile/documents",
+          },
+        ],
       },
       {
         text: "Events",
         route: "/events",
+        dropdownEntries: [
+          {
+            text: "Popular",
+            route: "/events/popular",
+          },
+          {
+            text: "Leisure",
+            route: "/events/leisure",
+          },
+          {
+            text: "Study",
+            route: "/events/study",
+          },
+          {
+            text: "Career",
+            route: "/events/career",
+          },
+          {
+            text: "Others",
+            route: "/events/others",
+          },
+        ],
       },
       {
         text: "Groups",
         route: "/groups",
+        dropdownEntries: [
+          {
+            text: "Popular",
+            route: "/groups/popular",
+          },
+          {
+            text: "Leisure",
+            route: "/groups/leisure",
+          },
+          {
+            text: "Study",
+            route: "/groups/study",
+          },
+          {
+            text: "Career",
+            route: "/groups/career",
+          },
+          {
+            text: "Others",
+            route: "/groups/others",
+          },
+        ],
       },
     ],
   }),
@@ -91,6 +156,36 @@ body {
 .bold {
   font-weight: bold;
 }
+
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 5px 10px 0px #0271bb50;
+  min-width: 100px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #e2001a;
+}
+
+.dropdown-content a:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 .link {
   padding: 13px;
   width: 100px;

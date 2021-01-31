@@ -8,11 +8,7 @@
         >Edit<v-icon>mdi-account-edit</v-icon></v-btn
       >
       <span class="bold">Avatar</span>
-      <img
-        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortWaved&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=ShirtCrewNeck&clotheColor=Gray01&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-        alt="Avatar"
-        class="avatar"
-      />
+      <img src="../assets/profile-avatar.svg" alt="Avatar" class="avatar" />
       <template v-for="info in textInfo">
         <span :key="info.field" class="bold">{{ info.field }}</span>
         <span :key="info.text">{{ info.text }}</span>
