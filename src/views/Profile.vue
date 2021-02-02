@@ -1,11 +1,15 @@
 <template>
-  <div class="grid-container">
+  <div class="profile-container">
     <div class="info-container">
       <h2 class="heading">
         Your profile
       </h2>
-      <v-btn class="text-capitalize edit-button" v-on:click="editProfile" text
-        >Edit<v-icon>mdi-account-edit</v-icon></v-btn
+      <v-btn
+        class="text-capitalize edit-button"
+        color="#0271bb"
+        v-on:click="editProfile"
+        text
+        ><v-icon class="mr-2">mdi-account-edit</v-icon>Edit</v-btn
       >
       <span class="bold">Avatar</span>
       <img src="../assets/profile-avatar.svg" alt="Avatar" class="avatar" />
@@ -95,7 +99,7 @@ export default {
 };
 </script>
 <style>
-.grid-container {
+.profile-container {
   display: grid;
   grid-template-columns: 1.75fr 1fr;
 }

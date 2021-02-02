@@ -1,8 +1,13 @@
 <template>
-  <div class="flex-container">
+  <div class="groups-container">
     <div class="heading-container">
       <h2 class="heading">Your groups</h2>
-      <input class="group-search" type="text" placeholder="Search..." />
+      <div>
+        <input class="group-search mr-2" type="text" placeholder="Search..." />
+        <v-btn class="white--text text-capitalize" color="#0271bb">
+          <v-icon>mdi-plus</v-icon>Create group</v-btn
+        >
+      </div>
     </div>
     <template v-for="group in groups">
       <div :key="group.title" class="group-container">
@@ -53,7 +58,7 @@ export default {
 </script>
 
 <style>
-.flex-container {
+.groups-container {
   display: flex;
   flex-direction: column;
   column-gap: 100;

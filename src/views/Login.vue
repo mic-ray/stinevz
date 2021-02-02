@@ -1,6 +1,8 @@
 <template>
   <div class="login-container">
-    <img src="../assets/stine-logo.jpg" alt="Stine-Logo" class="logo" />
+    <div>
+      <img src="../assets/stine-logo.jpg" alt="Stine-Logo" class="logo" />
+    </div>
     <div class="loginCard elevation-2">
       <h1 class="login-heading">Login to STiNE VZ</h1>
       <label for="identifier">STiNE-Identifier:</label>
@@ -30,12 +32,12 @@ export default {
 <style>
 .login-container {
   width: 550px;
-  margin: auto;
+  margin: 50px auto;
 }
 .logo {
   height: 100px;
   position: relative;
-  top: 7px;
+  top: 6px;
 }
 .login-heading {
   color: #e2001a;

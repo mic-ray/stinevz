@@ -145,6 +145,7 @@ body {
   width: 100%;
   height: 10px;
   margin-top: 10px;
+  position: fixed;
 }
 .title {
   margin-right: 50px;
@@ -198,7 +199,7 @@ body {
 }
 
 .view-container {
-  margin: 50px auto;
+  margin: 30px auto;
 }
 
 .footer {
