@@ -11,15 +11,66 @@
             type="text"
             placeholder="Search..."
           />
-          <v-btn class="white--text text-capitalize" color="#0271bb">
-            <v-icon>mdi-plus</v-icon>Create event</v-btn
-          >
+          <v-dialog v-model="dialog" persistent max-width="700">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                class="white--text text-capitalize"
+                color="#0271bb"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-plus</v-icon>Create event</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="heading">Create a new event</span>
+              </v-card-title>
+              <v-card-text>
+                <v-row justify="center" align="start">
+                  <v-col>
+                    <span class="bold field-container">Choose a date:</span>
+                    <v-date-picker
+                      v-model="dialogDate"
+                      color="#e2001a"
+                      first-day-of-week="1"
+                    ></v-date-picker
+                  ></v-col>
+                  <v-col>
+                    <span class="bold field-container">Choose a time:</span>
+                    <v-time-picker
+                      v-model="dialogTime"
+                      format="24hr"
+                      color="#e2001a"
+                    ></v-time-picker>
+                  </v-col>
+                </v-row>
+                <template v-for="(field, i) in dialogFields">
+                  <div :key="field" class="field-container">
+                    <span class="bold">{{ field }}:</span>
+                    {{ dialogEvent[i] }}
+                  </div>
+                </template>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="#0271bb" text @click="dialog = false">
+                  Close
+                </v-btn>
+                <v-btn color="#0271bb" text @click="saveEvent">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
       <template v-for="event in upcomingEvents">
-        <div :key="event.title" class="event-container mt-2 event-row">
+        <div :key="event.title" class="event-container mt-1 event-row">
           <div class="event-column">
-            <h3 class="heading">{{ event.date }}: {{ event.title }}</h3>
+            <h3 class="heading">
+              {{ convertToStringDate(event.date) }}: {{ event.title }}
+            </h3>
             <template v-for="(field, i) in fields">
               <div :key="field" class="field-container">
                 <span class="bold">{{ field }}:</span>
@@ -63,7 +114,7 @@
       <div class="throwback mt-2">
         <h2 class="heading">Throwback</h2>
         <div class="throwback-container">
-          <h3 class="heading">20th of December: Bake Biscuits</h3>
+          <h3 class="heading">20. December: Bake Biscuits</h3>
           <div><span class="bold">Number of participants:</span> 15</div>
 
           <span class="bold">Memories:</span>
@@ -78,18 +129,38 @@
         </div>
       </div>
     </div>
+    <Toast ref="toast">
+      Created an event! <span class="bold">+10 Stinchen</span>
+    </Toast>
   </div>
 </template>
 
 <script>
+import Toast from "../components/Toast";
 export default {
+  components: { Toast },
   mounted() {
     this.$refs.calendar.move(0);
   },
   methods: {
+    convertToStringDate(date) {
+      return `${date.getDate()}. ${this.months[date.getMonth()]}`;
+    },
     getImage: function(path) {
       var images = require.context("../assets/", false, /\.png$/);
       return images("./" + path + ".png");
+    },
+    saveEvent: function() {
+      var event = {
+        date: new Date(this.dialogDate + " " + this.dialogTime),
+        title: this.dialogEvent[0],
+        fields: [this.dialogTime, 1, this.dialogEvent[2], this.dialogEvent[3]],
+        image: "film",
+      };
+      this.$store.commit("addEvent", event);
+      this.dialog = false;
+      this.$store.commit("increaseScore", 10);
+      this.$refs.toast.display();
     },
     prev() {
       this.$refs.calendar.prev();
@@ -98,53 +169,48 @@ export default {
       this.$refs.calendar.next();
     },
     updateTitle: function({ start }) {
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-
-      this.calendarTitle = months[start.month - 1] + " " + start.year;
+      this.calendarTitle = this.months[start.month - 1] + " " + start.year;
     },
   },
   data: () => ({
+    months: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    dialog: false,
+    dialogDate: new Date().toISOString().substr(0, 10),
+    dialogTime: "12:00",
+    dialogFields: [
+      "Title",
+      "Description",
+      "Meeting Point",
+      "Number of participants",
+    ],
+    dialogEvent: [
+      "Netflix WatchParty - Brooklyn 99",
+      `You haven't seen the new season yet either and would like to
+              watch it together with other comedy freaks? Then this is the right
+              event for you!`,
+      "To be decided",
+      "5-10",
+    ],
     calendarFocus: "",
     calendarTitle: "",
     fields: [
       "Time",
-      "Number of participants",
       "Already registered",
       "Meeting point",
-    ],
-    upcomingEvents: [
-      {
-        date: "12th of February",
-        title: "Game Night",
-        fields: ["19:00", "4-10", 3, "https://uni-hamburg.zoom.us/"],
-        image: "people",
-        timestamp: "2021-02-12 19:00",
-      },
-      {
-        date: "19th of February",
-        title: "Beer Pong Tournament",
-        fields: [
-          "18:00",
-          "as many as possible",
-          10,
-          "https://www.google.de/maps",
-        ],
-        image: "beer",
-        timestamp: "2021-02-19 18:00",
-      },
+      "Number of participants",
     ],
   }),
   computed: {
@@ -153,11 +219,14 @@ export default {
       this.upcomingEvents.forEach((x) => {
         events.push({
           name: x.title,
-          start: x.timestamp,
+          start: x.date,
           color: "#e2001a",
         });
       });
       return events;
+    },
+    upcomingEvents: function() {
+      return this.$store.getters.getEvents;
     },
   },
 };
@@ -182,7 +251,7 @@ export default {
 
 .event-container {
   border: 1px solid rgba(0, 0, 0, 0.25);
-  padding: 10px;
+  padding: 5px;
 }
 
 .event-column {
@@ -197,7 +266,9 @@ export default {
 }
 
 .field-container {
-  margin: 5px 0px;
+  margin: 2.5px 0px;
+  font-size: 1rem;
+  color: black;
 }
 
 .event-image {

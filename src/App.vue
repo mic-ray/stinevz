@@ -3,7 +3,7 @@
     <div class="line"></div>
     <v-app-bar
       flat
-      color="rgba(200, 200, 200, 0.7)"
+      color="rgba(210, 210, 210, 1)"
       class="mt-5"
       height="50"
       v-if="!(this.$router.currentRoute.name === 'Login')"
@@ -131,7 +131,7 @@ export default {
 };
 </script>
 <style>
-html,
+/* html,
 body {
   height: 100%;
   width: 100%;
@@ -139,13 +139,14 @@ body {
   max-width: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
-}
+} */
 .line {
   background-color: #e2001a;
   width: 100%;
   height: 10px;
   margin-top: 10px;
   position: fixed;
+  z-index: 1;
 }
 .title {
   margin-right: 50px;

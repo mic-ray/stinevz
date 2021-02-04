@@ -31,7 +31,7 @@
       </div>
     </template>
     <Toast ref="toast">
-      In Gruppen engagiert! <span class="bold">+5 Stinchen</span>
+      Engaged in groups! <span class="bold">+5 Stinchen</span>
     </Toast>
   </div>
 </template>

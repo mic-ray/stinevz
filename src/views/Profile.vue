@@ -44,7 +44,7 @@
       </template>
     </div>
     <Toast ref="toast">
-      Profil bearbeitet! <span class="bold">+3 Stinchen</span>
+      Updated profile! <span class="bold">+3 Stinchen</span>
     </Toast>
   </div>
 </template>
