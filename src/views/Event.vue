@@ -16,6 +16,8 @@
               <v-btn
                 class="white--text text-capitalize"
                 color="#0271bb"
+                height="41"
+                elevation="0"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -89,18 +91,18 @@
     </div>
     <div class="calender-container">
       <div class="calendar">
-        <div class="calendar-controls mb-2">
-          <v-btn color="#e2001a" @click="prev()">
+        <div class="calendar-controls mb-1">
+          <v-btn elevation="0" height="41" color="#e2001a" @click="prev()">
             <v-icon color="white">mdi-chevron-left</v-icon>
           </v-btn>
-          <h3 class="heading" v-if="$refs.calendar">
+          <h2 class="heading" v-if="$refs.calendar">
             {{ calendarTitle }}
-          </h3>
-          <v-btn color="#e2001a" @click="next()">
+          </h2>
+          <v-btn elevation="0" height="41" color="#e2001a" @click="next()">
             <v-icon color="white">mdi-chevron-right</v-icon>
           </v-btn>
         </div>
-        <v-sheet height="275" elevation="2">
+        <v-sheet height="275">
           <v-calendar
             ref="calendar"
             v-model="calendarFocus"

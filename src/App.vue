@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <div class="top-background"></div>
     <div class="line"></div>
     <v-app-bar
       flat
@@ -24,7 +25,7 @@
               tag="a"
               v-for="dropdownEntry in entry.dropdownEntries"
               :key="dropdownEntry.text"
-              :to="dropdownEntry.route"
+              to="/notfound"
               >{{ dropdownEntry.text }}</router-link
             >
           </div>
@@ -131,15 +132,22 @@ export default {
 };
 </script>
 <style>
-/* html,
+html,
 body {
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
   max-height: 100%;
+  overflow-y: hidden; */
+  width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  overflow-y: hidden;
-} */
+}
+.top-background {
+  background-color: white;
+  width: 100%;
+  height: 10px;
+  position: fixed;
+  z-index: 1;
+}
 .line {
   background-color: #e2001a;
   width: 100%;
@@ -200,7 +208,7 @@ body {
 }
 
 .view-container {
-  margin: 30px auto;
+  margin-top: 30px;
 }
 
 .footer {

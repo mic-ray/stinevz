@@ -4,24 +4,28 @@
       <h2 class="heading">Your groups</h2>
       <div>
         <input class="group-search mr-2" type="text" placeholder="Search..." />
-        <v-btn class="white--text text-capitalize" color="#0271bb">
+        <v-btn
+          class="white--text text-capitalize"
+          height="41"
+          elevation="0"
+          color="#0271bb"
+        >
           <v-icon>mdi-plus</v-icon>Create group</v-btn
         >
       </div>
     </div>
     <template v-for="group in groups">
-      <div :key="group.title" class="group-container">
+      <div
+        :key="group.title"
+        class="group-container"
+        v-on:click="group.messages > 0 ? handleGroupChat(group.title) : null"
+      >
         <div class="row">
           <div class="column">
             <h1>{{ group.title }}</h1>
             {{ group.members }} members
           </div>
-          <div
-            v-on:click="
-              group.messages > 0 ? handleGroupChat(group.title) : null
-            "
-            class="chat-icon"
-          >
+          <div class="chat-icon">
             <v-icon size="50">mdi-forum</v-icon>
             <span v-if="group.messages > 0" class="chat-badge">{{
               group.messages
