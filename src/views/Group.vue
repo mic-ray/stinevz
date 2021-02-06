@@ -2,11 +2,11 @@
   <div class="groups-container">
     <div class="heading-container">
       <h2 class="heading">Your groups</h2>
-      <div>
+      <div style="display: flex; align-content:baseline;">
         <input class="group-search mr-2" type="text" placeholder="Search..." />
         <v-btn
           class="white--text text-capitalize"
-          height="41"
+          height="40"
           elevation="0"
           color="#0271bb"
         >

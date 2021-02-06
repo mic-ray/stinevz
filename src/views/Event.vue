@@ -5,7 +5,7 @@
         <h2 class="heading">
           Your events
         </h2>
-        <div>
+        <div style="display: flex; align-content:baseline;">
           <input
             class="events-search mr-2"
             type="text"
@@ -16,7 +16,7 @@
               <v-btn
                 class="white--text text-capitalize"
                 color="#0271bb"
-                height="41"
+                height="40"
                 elevation="0"
                 v-bind="attrs"
                 v-on="on"
