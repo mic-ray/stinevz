@@ -4,7 +4,7 @@
       <h2 class="heading">
         Your profile
       </h2>
-      <v-dialog v-model="dialog" persistent max-width="350">
+      <v-dialog v-model="dialog" persistent max-width="400">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="text-capitalize edit-button"
@@ -20,7 +20,9 @@
             <span class="heading">Edit your profile</span>
           </v-card-title>
           <v-card-text style="color:black; font-size:1rem;">
-            <h3>Adjust the visibility:</h3>
+            <h3>
+              Adjust the visibility *:
+            </h3>
             <div class="dialog-grid">
               <span class="bold">Semester:</span>
               <div>
@@ -41,10 +43,39 @@
                 ></v-switch>
               </div>
             </div>
+            <h3 class="mb-2">Adjust optional info:</h3>
+            <div class="dialog-grid">
+              <span class="bold">Hobbies:</span>
+              <div>
+                <template v-for="(hobby, i) in dialogHobbies">
+                  <div
+                    v-if="!hobby.toBeDeleted"
+                    :key="i"
+                    class="dialog-input-container"
+                  >
+                    <input
+                      type="text"
+                      class="dialog-input"
+                      v-model="hobby.name"
+                    />
+                    <v-btn icon @click="hobby.toBeDeleted = true"
+                      ><v-icon>
+                        mdi-delete
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <span style="color:grey;font-size:0.8rem;">
+              * Please note: Your name and field of study cannot be hidden to
+              prevent anonymous users who could potentially harm the
+              platform</span
+            >
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="#0271bb" text @click="dialog = false">
+            <v-btn color="#0271bb" text @click="handleCancel">
               Close
             </v-btn>
             <v-btn color="#0271bb" text @click="saveProfile">
@@ -93,12 +124,15 @@ export default {
   components: {
     Toast,
   },
+  mounted: function() {
+    this.initState();
+  },
   data: () => ({
     dialog: false,
-    visibility: {
-      semester: true,
-      age: true,
-    },
+    visibility: { semester: true, age: true },
+    hobbies: [],
+    dialogHobbies: [],
+    socials: [],
     todos: [
       {
         todo: "Complete your profile",
@@ -115,22 +149,43 @@ export default {
     ],
   }),
   methods: {
+    initState() {
+      Object.assign(this.visibility, this.$store.getters.getVisibility);
+      this.hobbies = [...this.$store.getters.getHobbies];
+      this.dialogHobbies = [...this.hobbies].map((x) => ({
+        name: x,
+        toBeDeleted: false,
+      }));
+      this.socials = [...this.$store.getters.getSocials];
+    },
     saveProfile: function() {
+      // Close dialog
       this.dialog = false;
+
+      // Update visibility of text info
       this.$store.commit("updateVisibility", this.visibility);
+
+      // Get not to be deleted updated hobbies
+      let updateHobbies = [...this.dialogHobbies]
+        .filter((x) => !x.toBeDeleted)
+        .map((x) => x.name);
+      // Update hobbies
+      this.$store.commit("updateHobbies", updateHobbies);
+
       this.$store.commit("increaseScore", 3);
+
+      // Set updated Hobbies
+      this.initState();
       this.$refs.toast.display();
+    },
+    handleCancel: function() {
+      this.dialog = false;
+      this.initState();
     },
   },
   computed: {
     textInfo: function() {
       return this.$store.getters.getTextInfo;
-    },
-    socials: function() {
-      return this.$store.getters.getSocials;
-    },
-    hobbies: function() {
-      return this.$store.getters.getHobbies;
     },
   },
 };
@@ -160,6 +215,17 @@ export default {
   grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-items: center;
+}
+
+.dialog-input-container {
+  display: flex;
+}
+
+.dialog-input {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 2px;
 }
 .avatar {
   vertical-align: middle;

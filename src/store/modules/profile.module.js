@@ -22,6 +22,10 @@ const profile = {
         visible: true,
       },
     },
+    visibility: {
+      semester: true,
+      age: true,
+    },
     hobbies: ["Cooking", "Volleyball", "Skiing, Snowboard"],
     socials: [
       { title: "Instagram", text: "https://www.instagram.com/marco.polo95/" },
@@ -35,6 +39,9 @@ const profile = {
     getTextInfo: (state) => {
       return state.textInfo;
     },
+    getVisibility: (state) => {
+      return state.visibility;
+    },
     getHobbies: (state) => {
       return state.hobbies;
     },
@@ -44,8 +51,12 @@ const profile = {
   },
   mutations: {
     updateVisibility: (state, visibility) => {
+      Object.assign(state.visibility, visibility);
       state.textInfo.semester.visible = visibility.semester;
       state.textInfo.age.visible = visibility.age;
+    },
+    updateHobbies: (state, hobbies) => {
+      state.hobbies = [...hobbies];
     },
   },
 };
