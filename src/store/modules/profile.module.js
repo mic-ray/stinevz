@@ -28,9 +28,9 @@ const profile = {
     },
     hobbies: ["Cooking", "Volleyball", "Skiing, Snowboard"],
     socials: [
-      { title: "Instagram", text: "https://www.instagram.com/marco.polo95/" },
+      { label: "Instagram", text: "https://www.instagram.com/marco.polo95/" },
       {
-        title: "LinkedIn",
+        label: "LinkedIn",
         text: "http://ca.linkedin.com/in/linkedin/MarcoPolo",
       },
     ],
@@ -57,6 +57,9 @@ const profile = {
     },
     updateHobbies: (state, hobbies) => {
       state.hobbies = [...hobbies];
+    },
+    updateSocials: (state, socials) => {
+      state.socials = JSON.parse(JSON.stringify(socials));
     },
   },
 };

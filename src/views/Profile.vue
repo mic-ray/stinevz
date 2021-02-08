@@ -4,7 +4,7 @@
       <h2 class="heading">
         Your profile
       </h2>
-      <v-dialog v-model="dialog" persistent max-width="400">
+      <v-dialog v-model="dialog" persistent max-width="550">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="text-capitalize edit-button"
@@ -23,29 +23,32 @@
             <h3>
               Adjust the visibility *:
             </h3>
-            <div class="dialog-grid">
-              <span class="bold">Semester:</span>
+            <div
+              class="mt-2"
+              style="display:grid; grid-template-columns:1fr 1fr;"
+            >
               <div>
+                <span class="bold">Semester:</span>
                 <v-switch
                   v-model="visibility.semester"
                   color="info"
-                  :label="visibility.semester ? 'Visibile' : 'Not visible'"
+                  :label="visibility.semester ? 'Visible' : 'Not visible'"
                 ></v-switch>
               </div>
-              <span class="bold">
-                Age:
-              </span>
               <div>
+                <span class="bold">
+                  Age:
+                </span>
                 <v-switch
                   v-model="visibility.age"
                   color="info"
-                  :label="visibility.age ? 'Visibile' : 'Not visible'"
+                  :label="visibility.age ? 'Visible' : 'Not visible'"
                 ></v-switch>
               </div>
             </div>
             <h3 class="mb-2">Adjust optional info:</h3>
             <div class="dialog-grid">
-              <span class="bold">Hobbies:</span>
+              <span class="bold mt-1" style="align-self:start;">Hobbies:</span>
               <div>
                 <template v-for="(hobby, i) in dialogHobbies">
                   <div
@@ -65,6 +68,44 @@
                     </v-btn>
                   </div>
                 </template>
+                <div style="display:flex; justify-content:center;">
+                  <v-btn class="text-capitalize" text @click="handleAddHobby"
+                    >Add hobby<v-icon> mdi-plus</v-icon></v-btn
+                  >
+                </div>
+              </div>
+              <span class="bold mt-1" style="align-self:start;">Socials:</span>
+              <div>
+                <template v-for="(social, i) in dialogSocials">
+                  <div
+                    v-if="!social.toBeDeleted"
+                    :key="i"
+                    class="dialog-input-container"
+                  >
+                    <input
+                      type="text"
+                      class="dialog-input"
+                      style="width:90px;"
+                      v-model="social.label"
+                    />
+                    <input
+                      type="text"
+                      class="dialog-input"
+                      style="width:250px;"
+                      v-model="social.text"
+                    />
+                    <v-btn icon @click="social.toBeDeleted = true"
+                      ><v-icon>
+                        mdi-delete
+                      </v-icon>
+                    </v-btn>
+                  </div>
+                </template>
+                <div style="display:flex; justify-content:center;">
+                  <v-btn class="text-capitalize" text @click="handleAddSocial"
+                    >Add Social<v-icon> mdi-plus</v-icon></v-btn
+                  >
+                </div>
               </div>
             </div>
             <span style="color:grey;font-size:0.8rem;">
@@ -92,14 +133,14 @@
         }}</span>
         <span v-if="info.visible" :key="info.text">{{ info.text }}</span>
       </template>
-      <span class="bold info-list">Hobbies &amp; Interests</span>
+      <span class="bold info-list">Hobbies</span>
       <ul>
         <li :key="hobby" v-for="hobby in hobbies">{{ hobby }}</li>
       </ul>
       <span class="bold info-list">Socials</span>
       <ul>
         <li :key="social.title" v-for="social in socials">
-          <a :href="social.text">{{ social.title }}</a>
+          <a :href="social.text">{{ social.label }}</a>
         </li>
       </ul>
     </div>
@@ -133,6 +174,7 @@ export default {
     hobbies: [],
     dialogHobbies: [],
     socials: [],
+    dialogSocials: [],
     todos: [
       {
         todo: "Complete your profile",
@@ -157,6 +199,10 @@ export default {
         toBeDeleted: false,
       }));
       this.socials = [...this.$store.getters.getSocials];
+      this.dialogSocials = JSON.parse(JSON.stringify(this.socials)).map((x) => {
+        x.toBeDeleted = false;
+        return x;
+      });
     },
     saveProfile: function() {
       // Close dialog
@@ -172,11 +218,28 @@ export default {
       // Update hobbies
       this.$store.commit("updateHobbies", updateHobbies);
 
+      // Get not to be deleted updated hobbies
+      let updateSocials = JSON.parse(JSON.stringify(this.dialogSocials))
+        .filter((x) => !x.toBeDeleted)
+        .map((x) => ({ label: x.label, text: x.text }));
+      // Update hobbies
+      this.$store.commit("updateSocials", updateSocials);
+
       this.$store.commit("increaseScore", 3);
 
       // Set updated Hobbies
       this.initState();
       this.$refs.toast.display();
+    },
+    handleAddHobby: function() {
+      this.dialogHobbies.push({ name: "New Hobby", toBeDeleted: false });
+    },
+    handleAddSocial: function() {
+      this.dialogSocials.push({
+        label: "Label",
+        text: "Social link",
+        toBeDeleted: false,
+      });
     },
     handleCancel: function() {
       this.dialog = false;
