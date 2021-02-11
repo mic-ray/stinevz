@@ -28,10 +28,10 @@
               <v-card-title>
                 <span class="heading">Create a new event</span>
               </v-card-title>
-              <v-card-text>
+              <v-card-text style="color:black; font-size:1rem;">
                 <v-row justify="center" align="start">
                   <v-col>
-                    <span class="bold field-container">Choose a date:</span>
+                    <span class="bold">Choose a date:</span>
                     <v-date-picker
                       v-model="dialogDate"
                       color="#e2001a"
@@ -39,7 +39,7 @@
                     ></v-date-picker
                   ></v-col>
                   <v-col>
-                    <span class="bold field-container">Choose a time:</span>
+                    <span class="bold">Choose a time:</span>
                     <v-time-picker
                       v-model="dialogTime"
                       format="24hr"
@@ -47,12 +47,28 @@
                     ></v-time-picker>
                   </v-col>
                 </v-row>
-                <template v-for="(field, i) in dialogFields">
-                  <div :key="field" class="field-container">
-                    <span class="bold">{{ field }}:</span>
-                    {{ dialogEvent[i] }}
-                  </div>
-                </template>
+                <div class="event-dialog-container">
+                  <template v-for="field in dialogFields">
+                    <span :key="field.label + 'span'" class="bold"
+                      >{{ field.label }}:</span
+                    >
+                    <input
+                      :key="field.label + 'input'"
+                      v-if="field.label !== 'Description'"
+                      class="dialog-input"
+                      type="text"
+                      style="width:250px;"
+                      v-model="field.model"
+                    />
+                    <textarea
+                      :key="field.label + 'text'"
+                      v-if="field.label === 'Description'"
+                      class="dialog-input "
+                      rows="3"
+                      v-model="field.model"
+                    ></textarea>
+                  </template>
+                </div>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -79,8 +95,14 @@
                 {{ event.fields[i] }}
               </div>
             </template>
+            <v-btn
+              class="text-capitalize"
+              style="align-self:start;"
+              color="#0271bb"
+              text
+              ><v-icon class="mr-2">mdi-share-variant</v-icon>Invite</v-btn
+            >
           </div>
-
           <img
             class="event-image"
             :src="getImage(event.image)"
@@ -155,8 +177,13 @@ export default {
     saveEvent: function() {
       var event = {
         date: new Date(this.dialogDate + " " + this.dialogTime),
-        title: this.dialogEvent[0],
-        fields: [this.dialogTime, 1, this.dialogEvent[2], this.dialogEvent[3]],
+        title: this.dialogFields.title.model,
+        fields: [
+          this.dialogTime,
+          1,
+          this.dialogFields.meetingPoint.model,
+          this.dialogFields.participants.model,
+        ],
         image: "film",
       };
       this.$store.commit("addEvent", event);
@@ -192,20 +219,25 @@ export default {
     dialog: false,
     dialogDate: new Date().toISOString().substr(0, 10),
     dialogTime: "12:00",
-    dialogFields: [
-      "Title",
-      "Description",
-      "Meeting Point",
-      "Number of participants",
-    ],
-    dialogEvent: [
-      "Netflix WatchParty - Brooklyn 99",
-      `You haven't seen the new season yet either and would like to
-              watch it together with other comedy freaks? Then this is the right
-              event for you!`,
-      "To be decided",
-      "5-10",
-    ],
+    dialogFields: {
+      title: {
+        label: "Title",
+        model: "Netflix WatchParty - Brooklyn 99",
+      },
+      description: {
+        label: "Description",
+        model:
+          "You haven't seen the new season yet either and would like to watch it together with other comedy freaks? Then this is the right event for you!",
+      },
+      meetingPoint: {
+        label: "Meeting Point",
+        model: "To be decided",
+      },
+      participants: {
+        label: "Number of participants",
+        model: "5-10",
+      },
+    },
     calendarFocus: "",
     calendarTitle: "",
     fields: [
@@ -252,8 +284,16 @@ export default {
 }
 
 .event-container {
+  display: flex;
+  align-items: center;
   border: 1px solid rgba(0, 0, 0, 0.25);
   padding: 5px;
+}
+
+.event-dialog-container {
+  display: grid;
+  grid-template-columns: 0.8fr 2fr;
+  align-items: center;
 }
 
 .event-column {
@@ -275,6 +315,7 @@ export default {
 
 .event-image {
   width: 150px;
+  height: 150px;
 }
 
 .calendar-controls {

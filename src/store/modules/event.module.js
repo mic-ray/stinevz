@@ -28,6 +28,7 @@ const event = {
   mutations: {
     addEvent: (state, event) => {
       state.events.unshift(event);
+      state.events.sort((a, b) => new Date(a.date) - new Date(b.date));
     },
   },
 };

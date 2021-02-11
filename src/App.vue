@@ -40,6 +40,12 @@
         <router-view />
       </v-container>
     </v-main>
+    <div
+      v-if="!(this.$router.currentRoute.name === 'Login')"
+      class="chat-container"
+    >
+      <v-icon color="white">mdi-chat</v-icon> Chat
+    </div>
     <v-footer height="50" color="primary" class="footer white--text">
       <span>© 2021 <strong>STiNE VZ</strong></span>
       <span>Privacy Policy | Terms of Service</span>
@@ -209,6 +215,20 @@ body {
 
 .view-container {
   margin-top: 30px;
+}
+
+.chat-container {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 1.5rem;
+  background-color: #3b515b;
+  color: white;
+  width: 150px;
+  margin-left: 75vw;
+  z-index: 1;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .footer {

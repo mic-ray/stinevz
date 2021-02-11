@@ -25,7 +25,7 @@
             </h3>
             <div
               class="mt-2"
-              style="display:grid; grid-template-columns:1fr 1fr;"
+              style="display:grid; grid-template-columns:100px 100px; column-gap:75px; justify-content:center;"
             >
               <div>
                 <span class="bold">Semester:</span>
@@ -70,7 +70,7 @@
                 </template>
                 <div style="display:flex; justify-content:center;">
                   <v-btn class="text-capitalize" text @click="handleAddHobby"
-                    >Add hobby<v-icon> mdi-plus</v-icon></v-btn
+                    ><v-icon>mdi-plus</v-icon>Add hobby</v-btn
                   >
                 </div>
               </div>
@@ -102,8 +102,8 @@
                   </div>
                 </template>
                 <div style="display:flex; justify-content:center;">
-                  <v-btn class="text-capitalize" text @click="handleAddSocial"
-                    >Add Social<v-icon> mdi-plus</v-icon></v-btn
+                  <v-btn class="text-capitalize" text @click="handleAddSocial">
+                    <v-icon>mdi-plus</v-icon>Add Social</v-btn
                   >
                 </div>
               </div>
