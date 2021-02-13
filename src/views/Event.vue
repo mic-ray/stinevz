@@ -135,7 +135,7 @@
           ></v-calendar>
         </v-sheet>
       </div>
-      <div class="throwback mt-2">
+      <div class="throwback mt-1">
         <h2 class="heading">Throwback</h2>
         <div class="throwback-container">
           <h3 class="heading">20. December: Bake Biscuits</h3>

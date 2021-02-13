@@ -5,6 +5,7 @@ import Profile from "../views/Profile.vue";
 import Event from "../views/Event.vue";
 import Group from "../views/Group.vue";
 import NotFound from "../views/NotFound.vue";
+import GroupDetail from "../views/GroupDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/groups",
     name: "Group",
     component: Group,
+  },
+  {
+    path: "/groups/:id",
+    name: "GroupDetail",
+    component: GroupDetail,
   },
   {
     path: "/notfound",

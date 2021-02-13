@@ -14,25 +14,29 @@
         >
       </div>
     </div>
-    <template v-for="group in groups">
-      <div
+    <template v-for="(group, i) in groups">
+      <router-link
+        tag="div"
         :key="group.title"
         class="group-container"
-        v-on:click="group.messages > 0 ? handleGroupChat(group.title) : null"
+        :to="{ path: '/groups/' + i, params: { group: group } }"
       >
         <div class="row">
           <div class="column">
             <h1>{{ group.title }}</h1>
             {{ group.members }} members
           </div>
-          <div class="chat-icon">
+          <div
+            class="chat-icon"
+            @click="group.messages > 0 ? handleGroupChat(group.title) : null"
+          >
             <v-icon size="50">mdi-forum</v-icon>
             <span v-if="group.messages > 0" class="chat-badge">{{
               group.messages
             }}</span>
           </div>
         </div>
-      </div>
+      </router-link>
     </template>
     <Toast ref="toast">
       Engaged in groups! <span class="bold">+5 Stinchen</span>
