@@ -100,7 +100,7 @@
               style="align-self:start;"
               color="#0271bb"
               text
-              ><v-icon class="mr-2">mdi-share-variant</v-icon>Invite</v-btn
+              ><v-icon class="mr-2">mdi-share-variant</v-icon>Share</v-btn
             >
           </div>
           <img

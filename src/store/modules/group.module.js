@@ -56,6 +56,13 @@ const group = {
         return x.title === groupTitle ? { ...x, messages: --x.messages } : x;
       });
     },
+    addGroup: (state, groupTitle) => {
+      const newGroup = {
+        title: groupTitle,
+        members: 1,
+      };
+      state.groups.unshift(newGroup);
+    },
   },
 };
 

@@ -3,7 +3,17 @@
     <div class="heading-container">
       <div style="display:flex;">
         <h2 class="heading mr-5">{{ group.title }}</h2>
-        <h3 style="align-self:center;">{{ group.members }} Members</h3>
+        <h3 style="align-self:center;">
+          {{ group.members }} <span v-if="group.members > 1">Members</span>
+          <span v-if="group.members === 1">Member</span>
+        </h3>
+        <v-btn
+          class="text-capitalize ml-2"
+          style="align-self:center;"
+          color="#0271bb"
+          text
+          ><v-icon class="mr-2">mdi-share-variant</v-icon>Invite</v-btn
+        >
       </div>
       <div style="display: flex; align-content:baseline;">
         <input class="group-search mr-2" type="text" placeholder="Search..." />
@@ -17,6 +27,7 @@
         >
       </div>
     </div>
+    <h2 v-if="!group.posts" style="text-align:center;">No posts yet</h2>
     <div class="posts-container mt-2">
       <div :key="i" v-for="(post, i) in group.posts" class="post-container">
         <div style="display:flex; flex-direction: column; padding:10px;">

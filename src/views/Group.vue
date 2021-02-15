@@ -4,30 +4,76 @@
       <h2 class="heading">Your groups</h2>
       <div style="display: flex; align-content:baseline;">
         <input class="group-search mr-2" type="text" placeholder="Search..." />
-        <v-btn
-          class="white--text text-capitalize"
-          height="40"
-          elevation="0"
-          color="#0271bb"
-        >
-          <v-icon>mdi-plus</v-icon>Create group</v-btn
-        >
+
+        <v-dialog v-model="dialog" persistent max-width="550">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="white--text text-capitalize"
+              height="40"
+              elevation="0"
+              color="#0271bb"
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-plus</v-icon>Create group</v-btn
+            >
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="heading">Create a new group</span>
+            </v-card-title>
+            <v-card-text style="color:black; font-size:1rem;">
+              <div
+                class="event-dialog-container"
+                :key="i"
+                v-for="(field, i) in dialogFields"
+              >
+                <span :key="field.label + 'span'" class="bold"
+                  >{{ field.label }}:</span
+                >
+                <input
+                  v-if="field.label !== 'Group Description'"
+                  class="dialog-input"
+                  type="text"
+                  v-model="field.model"
+                />
+                <textarea
+                  :key="field.label + 'text'"
+                  v-else
+                  class="dialog-input "
+                  rows="3"
+                  v-model="field.model"
+                ></textarea>
+              </div>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="#0271bb" text @click="resetDialog">
+                Close
+              </v-btn>
+              <v-btn color="#0271bb" text @click="saveGroup">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
     </div>
     <template v-for="(group, i) in groups">
-      <router-link
-        tag="div"
-        :key="group.title"
-        class="group-container"
-        :to="{ path: '/groups/' + i, params: { group: group } }"
-      >
+      <div :key="group.title" class="group-container">
         <div class="row">
-          <div class="column">
+          <router-link
+            tag="div"
+            class="column"
+            style="cursor:pointer;"
+            :to="{ path: '/groups/' + i, params: { group: group } }"
+          >
             <h1>{{ group.title }}</h1>
             {{ group.members }} members
-          </div>
+          </router-link>
           <div
             class="chat-icon"
+            style="cursor:pointer;"
             @click="group.messages > 0 ? handleGroupChat(group.title) : null"
           >
             <v-icon size="50">mdi-forum</v-icon>
@@ -36,7 +82,7 @@
             }}</span>
           </div>
         </div>
-      </router-link>
+      </div>
     </template>
     <Toast ref="toast">
       Engaged in groups! <span class="bold">+5 Stinchen</span>
@@ -50,11 +96,33 @@ export default {
   components: {
     Toast,
   },
+  data: () => ({
+    dialog: false,
+    dialogFields: {
+      title: {
+        label: "Group Title",
+        model: "A great new group",
+      },
+      description: {
+        label: "Group Description",
+        model: "Description of a great new group",
+      },
+    },
+  }),
   methods: {
     handleGroupChat: function(groupTitle) {
       this.$store.commit("decrementGroupMessages", groupTitle);
       this.$store.commit("increaseScore", 5);
       this.$refs.toast.display();
+    },
+    resetDialog: function() {
+      this.dialog = false;
+      this.dialogFields.title.model = "A great new group";
+      this.dialogFields.description.model = "Description of a great new group";
+    },
+    saveGroup: function() {
+      this.$store.commit("addGroup", this.dialogFields.title.model);
+      this.resetDialog();
     },
   },
   computed: {
@@ -98,8 +166,8 @@ export default {
 
 .group-container {
   border: 1px solid rgba(0, 0, 0, 0.25);
-  padding: 20px 40px;
-  margin: 20px 0;
+  padding: 20px 30px;
+  margin: 10px 0;
 }
 
 .chat-icon {
