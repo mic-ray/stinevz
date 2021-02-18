@@ -68,6 +68,34 @@
                       v-model="field.model"
                     ></textarea>
                   </template>
+                  <span class="bold">Image:</span>
+                  <div
+                    style="height:30px;"
+                    @click="dialogFileChosen = !dialogFileChosen"
+                  >
+                    <div class="mt-1" v-if="dialogFileChosen">
+                      Chosen File:
+                      <i>Documents/Images/Icons/film.png</i>
+                    </div>
+                    <div v-else>
+                      <v-btn
+                        style="height:30px;"
+                        class="text-capitalize"
+                        color="#0271bb"
+                        text
+                        ><v-icon class="mr-2">mdi-upload</v-icon>Upload</v-btn
+                      >
+                      or
+                      <v-btn
+                        style="height:30px;"
+                        class="text-capitalize"
+                        color="#0271bb"
+                        text
+                        ><v-icon class="mr-2">mdi-folder</v-icon
+                        >Documents</v-btn
+                      >
+                    </div>
+                  </div>
                 </div>
               </v-card-text>
               <v-card-actions>
@@ -100,7 +128,7 @@
               style="align-self:start;"
               color="#0271bb"
               text
-              ><v-icon class="mr-2">mdi-share-variant</v-icon>Share</v-btn
+              ><v-icon class="mr-2">mdi-share-variant</v-icon>Invite</v-btn
             >
           </div>
           <img
@@ -238,6 +266,7 @@ export default {
         model: "5-10",
       },
     },
+    dialogFileChosen: false,
     calendarFocus: "",
     calendarTitle: "",
     fields: [

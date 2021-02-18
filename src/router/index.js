@@ -6,6 +6,7 @@ import Event from "../views/Event.vue";
 import Group from "../views/Group.vue";
 import NotFound from "../views/NotFound.vue";
 import GroupDetail from "../views/GroupDetail.vue";
+import Final from "../views/Final.vue";
 
 Vue.use(VueRouter);
 
@@ -44,6 +45,11 @@ const routes = [
     path: "/notfound",
     name: "NotFound",
     component: NotFound,
+  },
+  {
+    path: "/final",
+    name: "Final",
+    component: Final,
   },
 ];
 

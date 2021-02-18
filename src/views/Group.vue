@@ -69,7 +69,8 @@
             :to="{ path: '/groups/' + i, params: { group: group } }"
           >
             <h1>{{ group.title }}</h1>
-            {{ group.members }} members
+            <span v-if="group.members > 1"> {{ group.members }} members </span>
+            <span v-if="group.members === 1"> {{ group.members }} member</span>
           </router-link>
           <div
             class="chat-icon"
