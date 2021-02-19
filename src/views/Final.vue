@@ -1,5 +1,7 @@
 <template>
-  <img class="meme" src="@/assets/santa.png" alt="" />
+  <div style="display:flex; justify-content:center;">
+    <img class="meme" src="@/assets/meme.jpg" alt="" />
+  </div>
 </template>
 <script>
 export default {
@@ -8,8 +10,7 @@ export default {
 </script>
 <style>
 .meme {
-  height: 100vh;
-  width: 100vw;
-  padding: 50px;
+  margin-top: 80px;
+  height: 80vh;
 }
 </style>

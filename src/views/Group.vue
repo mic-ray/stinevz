@@ -72,11 +72,7 @@
             <span v-if="group.members > 1"> {{ group.members }} members </span>
             <span v-if="group.members === 1"> {{ group.members }} member</span>
           </router-link>
-          <div
-            class="chat-icon"
-            style="cursor:pointer;"
-            @click="group.messages > 0 ? handleGroupChat(group.title) : null"
-          >
+          <div class="chat-icon" style="cursor:pointer;">
             <v-icon size="50">mdi-forum</v-icon>
             <span v-if="group.messages > 0" class="chat-badge">{{
               group.messages
@@ -86,8 +82,11 @@
       </div>
     </template>
     <Toast ref="toast">
-      Engaged in groups! <span class="bold">+5 Stinchen</span>
+      Created a group! <span class="bold">+10 Stinchen</span>
     </Toast>
+    <!-- <Toast ref="toast2">
+      Created a group! <span class="bold">+5 Stinchen</span>
+    </Toast> -->
   </div>
 </template>
 
@@ -114,7 +113,7 @@ export default {
     handleGroupChat: function(groupTitle) {
       this.$store.commit("decrementGroupMessages", groupTitle);
       this.$store.commit("increaseScore", 5);
-      this.$refs.toast.display();
+      this.$refs.toast2.display();
     },
     resetDialog: function() {
       this.dialog = false;
@@ -123,6 +122,8 @@ export default {
     },
     saveGroup: function() {
       this.$store.commit("addGroup", this.dialogFields.title.model);
+      this.$store.commit("increaseScore", 10);
+      this.$refs.toast.display();
       this.resetDialog();
     },
   },

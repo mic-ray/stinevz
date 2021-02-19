@@ -25,7 +25,7 @@
             </h3>
             <div
               class="mt-2"
-              style="display:grid; grid-template-columns:100px 100px; column-gap:75px; justify-content:center;"
+              style="display:grid; grid-template-columns:125px 125px; column-gap:60px; justify-content:center;"
             >
               <div>
                 <span class="bold">Semester:</span>
